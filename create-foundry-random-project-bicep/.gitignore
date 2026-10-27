@@ -1,0 +1,19 @@
+# Local environment files
+.env
+.env.*
+!.env.example
+*.local.bicepparam
+
+# Generated Bicep templates
+/main.json
+/modules/*.json
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
