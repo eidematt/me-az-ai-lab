@@ -17,6 +17,7 @@ The Bicep template creates:
 
 - `main.bicep` – subscription-scoped entry point for the deployment
 - `main.bicepparam` – sample parameter values for a dev environment
+- `main.local.bicepparam.example` – safe-to-commit template for local-only overrides
 - `deploy.ps1` – PowerShell deployment helper
 - `modules/workload.bicep` – deployment logic for the resource group and Foundry resources
 
@@ -40,7 +41,19 @@ az account set --subscription "<subscription-id-or-name>"
 .\deploy.ps1 -Location eastus2
 ```
 
-The script uses `main.bicepparam`, runs a `what-if` preview, and asks for confirmation before deploying. To use another parameter file or skip the confirmation prompt:
+The script uses `main.bicepparam`, runs a `what-if` preview, and asks for confirmation before deploying. It takes the deployment subscription from the active Azure CLI context and no longer overrides `subscriptionId` from the parameter file.
+
+For local-only values, copy the example to the ignored file and edit that copy:
+
+```powershell
+Copy-Item .\main.local.bicepparam.example .\main.local.bicepparam
+# Edit main.local.bicepparam, then:
+.\deploy.ps1 -ParamFile main.local.bicepparam
+```
+
+`main.local.bicepparam` is ignored by Git. Keep real local identifiers in that file and never commit the local copy. To target a specific subscription in the Bicep template, uncomment and replace the `subscriptionId` example there. Your signed-in account must have deployment permissions in the target subscription. The top-level deployment still runs in the subscription selected in Azure CLI.
+
+To use another parameter file or skip the confirmation prompt:
 
 ```powershell
 .\deploy.ps1 -Location centralus -ParamFile prod.bicepparam
@@ -57,6 +70,8 @@ Edit `main.bicepparam` to change defaults such as:
 - model settings
 - public network access and local auth behavior
 - optional RBAC assignment for the project
+
+Keep `subscriptionId` and personal Entra object IDs out of this shared sample; put them in `main.local.bicepparam` instead.
 
 Example settings from the template:
 

@@ -1,0 +1,27 @@
+// Copy this file to main.local.bicepparam and put local-only overrides here.
+// The copied file is ignored by Git.
+using './main.bicep'
+
+param workload = 'aiapp'
+param environment = 'dev'
+param location = 'eastus2'
+param publicNetworkAccess = 'Enabled'
+param disableLocalAuth = true
+
+param deployModel = true
+param modelName = 'gpt-4.1-mini'
+param modelVersion = '2025-04-14'
+param modelSkuName = 'GlobalStandard'
+param modelCapacity = 10
+
+// Optional: pin the resources to a subscription. Replace the placeholder,
+// then make sure your account has access to that subscription.
+// param subscriptionId = '00000000-0000-0000-0000-000000000000'
+
+param projectUserPrincipalId = ''
+param projectUserPrincipalType = 'Group'
+
+param tags = {
+  owner: 'platform-team'
+  costCenter: 'it'
+}

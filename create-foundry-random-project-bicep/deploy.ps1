@@ -52,7 +52,7 @@ $deployArgs = @(
     '--location', $Location,
     '--template-file', 'main.bicep',
     '--parameters', $ParamFile,
-    '--parameters', "subscriptionId=$subscriptionId", "location=$Location"
+    '--parameters', "location=$Location"
 )
 
 Write-Host "Running what-if..." -ForegroundColor Cyan
